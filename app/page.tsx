@@ -1,13 +1,9 @@
-import Image from 'next/image';
-import DowloaderComponent from './components/DowloaderComponent';
-import VideoFooter from './components/Footers/VideoFooter';
-import ImageConverter from './components/ConvertImage/ImageConverter';
+import ThumbnailDownloader from './components/ThumbnailDownloader/ThumbnailDownloader';
 
 export default function Home() {
   return (
     <div>
-      <ImageConverter />
-      <VideoFooter />
+      <ThumbnailDownloader />
     </div>
   );
 }

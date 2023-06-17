@@ -7,8 +7,8 @@ import { ThemeContext } from './Styles/themeContext';
 interface ButtonProps {
   children: React.ReactNode;
   type?: 'button' | 'submit' | 'reset';
-  colorScheme: string;
-  variant: string;
+  colorScheme?: string;
+  variant?: string;
   onClick: () => void;
   isLoading: boolean;
 }
@@ -43,9 +43,9 @@ const ButtonComponent: React.FC<ButtonProps> = ({
       isLoading={isLoading}
       spinner={<Spinner size='sm' />}
       type={type}
-      colorScheme='teal'
+      colorScheme='gray'
       variant='solid'
-      className='  rounded-md p-2 mt-2 flex items-center gap-2 hover:opacity-50 transition'
+      className='  rounded-md p-2 text-xs lg:text-base px-4  flex items-center gap-2 hover:opacity-50 transition bg-gray-300'
     >
       {children}
     </Button>
