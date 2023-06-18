@@ -46,11 +46,11 @@ function ImageConverter() {
 
   return (
     <Box textAlign='center' minHeight='100%' p={8}>
-      <VStack spacing={4} maxW='md' mx='auto'>
-        <Heading size='xl' fontWeight='bold' color='gray.800'>
+      <VStack spacing={4} className='max-w-lg' mx='auto'>
+        <Heading size='xl' fontWeight='bold'>
           Image Converter
         </Heading>
-        <Text color='gray.600'>
+        <Text className='text-white/80'>
           Upload an image and convert it to different formats.
         </Text>
         <Dropzone onDrop={handleFileDrop}>
@@ -61,69 +61,99 @@ function ImageConverter() {
               p={4}
               mx='auto'
               my={8}
-              bg='white'
+              className='bg-transparent backdrop-blur-lg'
               border='2px dashed'
               borderColor='gray.300'
               rounded='lg'
             >
               <input {...getInputProps()} />
-              <Text color='gray.500' textAlign='center' cursor='pointer'>
+              <Text
+                className='text-white/80'
+                textAlign='center'
+                cursor='pointer'
+              >
                 Drag and drop an image here or click to upload.
               </Text>
             </Box>
           )}
         </Dropzone>
-        {selectedImage && (
-          <Box w='full' mb={8}>
-            <img
-              src={selectedImage}
-              alt='Uploaded Image'
-              className='w-full rounded-lg'
-            />
-          </Box>
-        )}
-        {selectedImage && (
-          <Box w='full'>
-            <Text mb={2} color='gray.700'>
-              Select the conversion format:
-            </Text>
-            <Select
-              value={selectedFormat}
-              onChange={handleFormatChange}
-              bg='white'
-              borderColor='gray.300'
-              borderWidth='1px'
-              rounded='md'
-              p={2}
-              mb={4}
-            >
-              <option value=''>Select a format</option>
-              <option value='jpeg'>JPEG</option>
-              <option value='png'>PNG</option>
-              <option value='gif'>GIF</option>
-              <option value='bmp'>BMP</option>
-              <option value='webp'>WebP</option>
-              <option value='ico'>ICO</option>
-              <option value='eps'>EPS</option>
-              <option value='exr'>EXR</option>
-              <option value='svg'>SVG</option>
-              <option value='tga'>TGA</option>
-              <option value='tiff'>TIFF</option>
-              <option value='wbmp'>WBMP</option>
-            </Select>
-            {errorMessage && (
-              <Text color='red.500' mb={4}>
-                {errorMessage}
+        <div className='bg-[#2b2b2b] p-5 w-full rounded-md'>
+          {selectedImage && (
+            <Box w='full' mb={8}>
+              <img
+                src={selectedImage}
+                alt='Uploaded Image'
+                className='w-full rounded-lg'
+              />
+            </Box>
+          )}
+          {selectedImage && (
+            <Box w='full'>
+              <Text mb={2} className='text-white'>
+                Select the conversion format:
               </Text>
-            )}
-            <button
-              onClick={handleConvertImage}
-              className='w-full px-4 py-2 text-white bg-indigo-500 rounded-md hover:bg-indigo-600 transition'
-            >
-              Convert
-            </button>
-          </Box>
-        )}
+              <select
+                value={selectedFormat}
+                onChange={handleFormatChange}
+                // bg='transparent'
+                className='w-full  border-sky-500 bg-white/10 backdrop-blur-lg  items-center p-2  rounded-md border-b-sky-500 border-b-2'
+                // className='block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
+                // variant='flushed'
+              >
+                <option className='bg-[#2b2b2b]' value=''>
+                  Select a format
+                </option>
+                <option className='bg-[#2b2b2b]' value='jpeg'>
+                  JPEG
+                </option>
+                <option className='bg-[#2b2b2b]' value='png'>
+                  PNG
+                </option>
+                <option className='bg-[#2b2b2b]' value='gif'>
+                  GIF
+                </option>
+                <option className='bg-[#2b2b2b]' value='bmp'>
+                  BMP
+                </option>
+                <option className='bg-[#2b2b2b]' value='webp'>
+                  WebP
+                </option>
+                <option className='bg-[#2b2b2b]' value='ico'>
+                  ICO
+                </option>
+                <option className='bg-[#2b2b2b]' value='eps'>
+                  EPS
+                </option>
+                <option className='bg-[#2b2b2b]' value='exr'>
+                  EXR
+                </option>
+                <option className='bg-[#2b2b2b]' value='svg'>
+                  SVG
+                </option>
+                <option className='bg-[#2b2b2b]' value='tga'>
+                  TGA
+                </option>
+                <option className='bg-[#2b2b2b]' value='tiff'>
+                  TIFF
+                </option>
+                <option className='bg-[#2b2b2b]' value='wbmp'>
+                  WBMP
+                </option>
+              </select>
+              {errorMessage && (
+                <Text color='red.500' mb={4}>
+                  {errorMessage}
+                </Text>
+              )}
+              <button
+                onClick={handleConvertImage}
+                className='w-full px-4 mt-5 py-2 text-white bg-sky-500 rounded-md hover:bg-sky-600 transition'
+              >
+                Convert
+              </button>
+            </Box>
+          )}
+        </div>
       </VStack>
     </Box>
   );

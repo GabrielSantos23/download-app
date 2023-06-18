@@ -2,6 +2,7 @@
 
 import React, { useState, createContext, useContext } from 'react';
 import Header from '../Header/Header';
+import Footer from '../Footers/Footer';
 
 // Crie o contexto
 
@@ -13,7 +14,8 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <div className=' h-full  '>
       <Header />
-      <div className='lg:px-10'>{children}</div>
+      <div className=''>{children}</div>
+      <Footer />
     </div>
   );
 };

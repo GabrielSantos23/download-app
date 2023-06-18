@@ -23,6 +23,7 @@ import {
 } from '@chakra-ui/react';
 import { ChevronDownIcon, DownloadIcon, TimeIcon } from '@chakra-ui/icons';
 import { useTheme } from '@chakra-ui/react';
+import Link from 'next/link';
 interface SearchYoutubeProps {
   setErrorMessage: React.Dispatch<React.SetStateAction<string>>;
   errorMessage: string;
@@ -52,15 +53,6 @@ const SearchYoutube: React.FC<SearchYoutubeProps> = ({
   }>({});
 
   console.log(formated);
-
-  const theme2 = useTheme();
-  const isDarkTheme = theme === 'dark';
-
-  const getColor = (color: string) => {
-    return isDarkTheme
-      ? theme2.colors.darkTheme[color]
-      : theme2.colors.lightTheme[color];
-  };
 
   const formatPublishedDate = (publishedAt: string) => {
     const date = new Date(publishedAt);
@@ -131,23 +123,21 @@ const SearchYoutube: React.FC<SearchYoutubeProps> = ({
               <Card
                 maxW={'sm'}
                 boxShadow={'xl'}
-                className={`${
-                  theme === 'dark'
-                    ? 'bg-darkTheme-body group-hover:bg-darkTheme-card '
-                    : 'bg-lightTheme-body group-hover:bg-lightTheme-card  '
-                } transition`}
+                className={`bg-[#2b2b2b] text-white transition`}
               >
                 <CardBody>
-                  <Image
-                    src={result.snippet.thumbnails.high.url}
-                    alt={result.snippet.title}
-                    borderRadius='lg'
-                  />
+                  <Link
+                    target='_blank'
+                    href={`https://youtube.com/watch?v=${result.id.videoId}`}
+                  >
+                    <Image
+                      src={result.snippet.thumbnails.high.url}
+                      alt={result.snippet.title}
+                      borderRadius='lg'
+                    />
+                  </Link>
                   <Stack mt='6' spacing='3'>
-                    <Heading
-                      className='text-lg truncate'
-                      style={{ color: getColor('text') }}
-                    >
+                    <Heading className='text-lg truncate'>
                       {result.snippet.title}
                     </Heading>
                     <div className='flex justify-between items-center'>
@@ -158,14 +148,14 @@ const SearchYoutube: React.FC<SearchYoutubeProps> = ({
                           spinner={<Spinner size='sm' />}
                           as={Button}
                           rightIcon={<DownloadIcon />}
-                          style={{ color: getColor('text') }}
-                          colorScheme='gray'
-                          className='bg-gray-300'
+                          colorScheme=''
+                          className='bg-white/10 text-white hover:bg-white/20 transition duration-300'
                         >
                           Download
                         </MenuButton>
-                        <MenuList>
+                        <MenuList className='bg-[#2b2b2b] border-none'>
                           <MenuItem
+                            className='hover:bg-white/10 transition duration-300'
                             onClick={() => {
                               handleDownloadVideo(result.id.videoId, 'mp4');
                             }}
@@ -173,6 +163,7 @@ const SearchYoutube: React.FC<SearchYoutubeProps> = ({
                             Download MP4
                           </MenuItem>
                           <MenuItem
+                            className='hover:bg-white/10 transition duration-300'
                             onClick={() => {
                               handleDownloadVideo(result.id.videoId, 'mp3');
                             }}
@@ -182,7 +173,9 @@ const SearchYoutube: React.FC<SearchYoutubeProps> = ({
                         </MenuList>
                       </Menu>
                       <Tooltip
-                        label={formatPublishedDate(result.snippet.publishedAt)}
+                        label={` Published at ${formatPublishedDate(
+                          result.snippet.publishedAt
+                        )}`}
                       >
                         <TimeIcon className='cursor-pointer' />
                       </Tooltip>

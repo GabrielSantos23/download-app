@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Image, Input } from '@chakra-ui/react';
 import ButtonComponent from '../Button';
+import SearchInput from '../Inputs/SearchInput';
 
 interface Thumbnail {
   url: string;
@@ -91,28 +92,32 @@ const ThumbnailDownloader = () => {
   };
 
   return (
-    <div className='max-w-3xl mx-auto mt-8 p-4 bg-white shadow'>
+    <div className='max-w-xl mx-auto mt-8 p-4  '>
       <h2 className='text-2xl font-bold mb-4'>YouTube Thumbnail Downloader</h2>
-      <p className='text-gray-600 mb-4'>
+      <p className='text-white/80 mb-4'>
         Enter the YouTube video URL to download its thumbnails.
       </p>
       <form onSubmit={handleSubmit} className='flex items-center gap-2'>
-        <Input
+        <SearchInput
           type='text'
-          size='md'
           value={videoLink}
           onChange={handleInputChange}
           placeholder='Enter video URL'
           isInvalid={error !== ''}
+          isLoading={isLoading}
         />
-        <ButtonComponent onClick={() => {}} isLoading={isLoading} type='submit'>
+        {/* <ButtonComponent onClick={() => {}} isLoading={isLoading} type='submit'>
           Download
-        </ButtonComponent>
+        </ButtonComponent> */}
       </form>
 
       {error !== '' && <p className='text-red-500 mt-2'>{error}</p>}
 
-      <div className='flex flex-col items-center mt-4'>{thumbnails}</div>
+      {thumbnails.length > 0 && (
+        <div className='flex flex-col items-center mt-4 bg-[#2b2b2b] p-5 rounded-md'>
+          {thumbnails}
+        </div>
+      )}
     </div>
   );
 };

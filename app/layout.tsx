@@ -14,41 +14,14 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [theme, setTheme] = useState('light');
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const storedTheme = localStorage.getItem('theme');
-      if (storedTheme !== null && storedTheme !== undefined) {
-        setTheme(storedTheme);
-      }
-    }
-  }, []);
-
-  const updateTheme = (newTheme: string) => {
-    setTheme(newTheme);
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('theme', newTheme);
-    }
-  };
   return (
     <html lang='en'>
-      <body
-        className={`${inter.className}  ${
-          theme === 'dark' ? 'bg-darkTheme-body' : 'bg-lightTheme-body'
-        }  ${
-          theme === 'dark' ? 'text-darkTheme-text' : 'text-lightTheme-text'
-        } transition  scrollbar-thin ${
-          theme === 'dark'
-            ? 'scrollbar-thumb-darkTheme-span scrollbar-track-darkTheme-scrollback'
-            : 'scrollbar-thumb-lightTheme-span  scrollbar-track-lightTheme-scrollback'
-        }  `}
-      >
-        <ThemeContext.Provider value={{ theme, setTheme: updateTheme }}>
+      <body className={`${inter.className} bg-slate-950   background-image  `}>
+        <div className='w-full    	'>
           <Providers>
             <Layout>{children}</Layout>
           </Providers>
-        </ThemeContext.Provider>
+        </div>
       </body>
     </html>
   );

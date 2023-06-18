@@ -6,4 +6,17 @@ html,
 body,
 :root {
   height: 100%;
+  color-scheme: dark;
+}
+
+body {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 70%;
+  background-attachment: fixed;
+  color: #fff;
+}
+
+.background-image {
+  background-image: url('/logoblur.png');
 }

@@ -23,6 +23,7 @@ import {
 import { useTheme } from '@emotion/react';
 import ButtonComponent from './Button';
 import { DownloadIcon } from '@chakra-ui/icons';
+import SearchInput from './Inputs/SearchInput';
 type VideoInfo = {
   thumbnail: string;
   channelTitle: string;
@@ -184,66 +185,50 @@ export default function DownloadForm() {
 
   return (
     <div className='flex flex-col  mx-5 justify-center items-center gap-5 mt-40  '>
-      <div className='flex flex-col justify-center items-center gap-2'>
-        <h1 className='text-4xl'>YouTube Downloader</h1>
-        <h3 className='text-lg'>
+      <div className='flex flex-col  max-w-xl w-full  justify-center items-center gap-2'>
+        <h1 className='  xl:text-5xl text-2xl font-bold text-white'>
+          YouTube Downloader
+        </h1>
+        <h3 className='text-xs text-white/80 text-center '>
           Convert and download Youtube videos in MP4, MP3, MOV and FLV for free
         </h3>
       </div>
       <form
-        className='flex 2xl:w-[900px] lg:w-[40%] w-full '
+        className='flex  max-w-xl  w-full'
         onSubmit={(e) => {
           e.preventDefault();
           handleConvert();
         }}
       >
         <Stack direction='row' align='center' width={'100%'}>
-          <Input
+          <SearchInput
             type='text'
-            size={'md'}
             value={videoUrl}
             onChange={(e) => setVideoUrl(e.target.value)}
             placeholder='Enter video URL'
-            className={` bg-transparent   outline-none border-[1.5px] ${
-              theme === 'dark'
-                ? 'border-darkTheme-line'
-                : 'border-lightTheme-line'
-            } p-2 w-full rounded-md  `}
-          />
-
-          <ButtonComponent
-            type='submit'
-            colorScheme='teal'
-            variant='solid'
-            onClick={handleConvert}
             isLoading={isLoadingSearch || isLoadingSearchText}
-          >
-            Convert
-          </ButtonComponent>
+          />
         </Stack>
       </form>
 
       {videoInfo && (
         <Card
-          direction={{ base: 'column', sm: 'row' }}
-          overflow='hidden'
-          variant='outline'
-          className={`flex gap-5 2xl:w-[900px] lg:w-[40%] w-full lg:flex-row flex-col justify-center  items-center lg:justify-start ${
-            theme === 'dark' ? 'bg-darkTheme-card' : 'bg-lightTheme-card'
-          }`}
+          className='max-w-xl  bg-[#2b2b2b] backdrop-blur-lg flex  text-white justify-center'
+          direction={{ base: 'column', md: 'row' }}
         >
           <Image
             src={videoInfo.thumbnail}
             maxW={{ base: '100%', sm: '250px' }}
             alt='Video Thumbnail'
             objectFit='cover'
+            className='rounded-md'
           />
           <Stack>
             <CardBody>
-              <Heading size='md' className=' text-ellipsis '>
-                {videoInfo.title}
-              </Heading>
-              <Text py={2}>{videoInfo.channelTitle}</Text>
+              <Heading size='sm'> {videoInfo.title}</Heading>
+              <Text py={2} size={'xs'}>
+                {videoInfo.channelTitle}
+              </Text>
             </CardBody>
             <CardFooter>
               <Menu isOpen={isOpen} onClose={() => setIsOpen(false)}>
@@ -251,24 +236,22 @@ export default function DownloadForm() {
                   as={Button}
                   rightIcon={<DownloadIcon />}
                   onClick={() => setIsOpen(!isOpen)}
-                  // style={{ color: getColor('text') }}
-                  colorScheme='gray'
-                  className='bg-gray-300'
+                  colorScheme=''
+                  className='bg-white/20 backdrop-blur-md text-white hover:bg-[#2b2b2b] duration-300'
                 >
                   Download
                 </MenuButton>
-                <MenuList
-                  style={
-                    {
-                      // color: getColor('text'),
-                      // backgroundColor: getColor('card'),
-                    }
-                  }
-                >
-                  <MenuItem onClick={() => handleDownload('mp4')}>
+                <MenuList className='bg-[#2b2b2b] backdrop-blur-lg text-white border-none'>
+                  <MenuItem
+                    className='hover:bg-white/30  duration-300 transition'
+                    onClick={() => handleDownload('mp4')}
+                  >
                     Download MP4
                   </MenuItem>
-                  <MenuItem onClick={() => handleDownload('mp3')}>
+                  <MenuItem
+                    className='hover:bg-white/30 duration-300 transition '
+                    onClick={() => handleDownload('mp3')}
+                  >
                     Download MP3
                   </MenuItem>
                 </MenuList>
@@ -277,7 +260,7 @@ export default function DownloadForm() {
           </Stack>
         </Card>
       )}
-      <div className='w-1/3 text-red-600'>
+      <div className='w-1/3 text-red-600 text-center flex justify-center items-center'>
         {errorMessage && <p>{errorMessage}</p>}
       </div>
 
