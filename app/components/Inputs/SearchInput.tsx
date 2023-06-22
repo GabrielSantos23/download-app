@@ -16,6 +16,8 @@ interface SearchInputProps {
   placeholder?: string;
   isLoading?: boolean;
   isInvalid?: boolean;
+  id?: string;
+  title?: string;
 }
 
 const SearchInput: React.FC<SearchInputProps> = ({
@@ -26,19 +28,24 @@ const SearchInput: React.FC<SearchInputProps> = ({
   placeholder,
   isLoading,
   isInvalid,
+  id,
+  title,
 }) => {
   return (
     <div className='w-full'>
-      <InputGroup size='sm'>
+      <InputGroup size='md'>
         <Input
-          pr='4.5rem'
+          title={title}
+          pr='2.7rem' // Adjusted padding-right value
           type='text'
           value={value}
           onChange={onChange}
-          className='text-white focus:bg-[#1a1a1a] bg-white/10 w-full backdrop-blur-lg p-4 rounded-sm'
+          className='text-white focus:bg-[#1a1a1a] bg-white/10 w-full backdrop-blur-lg pl-4 rounded-sm'
           placeholder={placeholder}
           variant='flushed'
           isInvalid={isInvalid}
+          autoFocus={true}
+          id={id}
         />
         <InputRightElement width='3.5rem' gap={2}>
           <Button

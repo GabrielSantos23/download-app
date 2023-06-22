@@ -1,9 +1,11 @@
 'use client';
 
-import { useState, FormEvent } from 'react';
+import { useState, FormEvent, useEffect } from 'react';
 import { Exception, ClientException } from '@/exceptions';
 import { Button } from '@chakra-ui/react';
-
+import SearchInput from '../Inputs/SearchInput';
+import {motion} from 'framer-motion'
+import CardStorage from '../Cards/CardStorage';
 const validateInput = (postUrl: string) => {
   if (!postUrl) {
     throw new ClientException('Instagram URL was not provided');
@@ -55,6 +57,8 @@ export const InstagramForm = () => {
   const [errorMsg, setErrorMsg] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
+
+
   const handleError = (error: any) => {
     if (error instanceof Exception) {
       setErrorMsg(error.message);
@@ -72,6 +76,9 @@ export const InstagramForm = () => {
     setIsLoading(true);
     setErrorMsg('');
 
+
+
+    
     try {
       validateInput(postUrl);
     } catch (error: any) {
@@ -89,38 +96,77 @@ export const InstagramForm = () => {
     setIsLoading(false);
   };
 
+
+  useEffect(() => {
+    const exampleUrl = 'https://www.instagram.com/reel/Csbwwx1J2VE/';
+    setPostUrl(exampleUrl);
+  }, []);
+
+  useEffect(() => {
+    if (postUrl !== '') {
+      const formElement = document.createElement('form');
+      formElement.dispatchEvent(new Event('submit'));
+    }
+  }, [postUrl]);
   return (
     <>
-      {errorMsg !== '' && <div>{errorMsg}</div>}
-      <form onSubmit={handleSubmit}>
-        <label htmlFor='url-input' className='sr-only'>
-          Instagram URL input
-        </label>
-        <input
+    <div className='flex items-center  flex-col lg:p-32 ' >
+
+
+      <div className='mb-5'>
+        <h1 className='2xl:text-6xl xl:text-5xl text-2xl font-bold text-white'> Insta Downloader</h1>
+        <p className='text-xs text-white/80 text-center'>Enter a Reels or post URL, click search, and download the video.
+</p>
+      
+      </div>
+      <form className='max-w-xl flex w-full flex-col gap-5 mt-6' onSubmit={handleSubmit}>
+   
+        <SearchInput
           id='url-input'
           type='url'
           value={postUrl}
-          autoFocus={true}
           onChange={(e) => setPostUrl(e.target.value)}
           placeholder='e.g. https://www.instagram.com/p/CGh4a0iASGS'
           aria-label='Instagram video download URL input'
           title='Instagram video download URL input'
-        />
+          isLoading={isLoading}
+          />
+      {errorMsg !== '' && <div className='text-red-500'>{errorMsg}</div>}
+
+
+
+          <motion.div 
+            initial={{ height: 0 }}
+            animate={{ height: 'auto' }}
+            transition={{
+              duration: 0.5,
+              ease: 'linear',
+            }}
+          className={`${videoUrl && 'bg-[#2B2B2B]' }  p-5 rounded-md w-full flex flex-col items-center mb-5`}>
+
         {videoUrl !== '' && (
-          <video controls>
+          <motion.video 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{
+            duration: 0.4,
+            delay: 0.4,
+          }}
+          preload='auto'
+          className='w-full max-h-[500px] bg-black'
+          controls>
             <source src={videoUrl} type='video/mp4' />
             Your browser does not support the video tag.
-          </video>
+          </motion.video>
         )}
-        {downloadUrl !== '' && (
-          <a href={downloadUrl} download>
-            Download Video
-          </a>
-        )}
-        <Button type='submit' isLoading={isLoading}>
-          Get Video
-        </Button>
+      
+   
+        </motion.div>
+      <CardStorage />
       </form>
+      
+
+        </div>
     </>
   );
 };

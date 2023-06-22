@@ -15,6 +15,7 @@ import {
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { BiChevronDown } from 'react-icons/bi';
+import {motion} from 'framer-motion'
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -31,6 +32,13 @@ const Header = () => {
   };
 
   const MenuItemStyle = 'hover:bg-white/20 transition duration-300';
+
+  const menuItems = [
+    { name: 'Twitter Downloader', path: '/twitterdownloader' },
+    { name: 'Youtube Downloader', path: '/' },
+    { name: 'Instagram Downloader', path: '/instagramdownloader' },
+    { name: 'Thumbnail Downloader', path: '/thumbnaildownloader' },
+  ]
 
   return (
     <div className='w-full px-10 py-5 flex justify-center bg-transparent'>
@@ -52,35 +60,22 @@ const Header = () => {
             </button>
             {isMenuOpen && (
               <div
-                className='absolute right-0 mt-5  bg-white/10 backdrop-blur-lg rounded-md w-52'
+                className='absolute right-0 mt-5 z-50  bg-white/10 backdrop-blur-lg rounded-md w-52'
                 onMouseEnter={handleMenuOpen}
                 onMouseLeave={handleMenuClose}
               >
                 <ul className='py-2 cursor-pointer'>
-                  <li
-                    className='px-4 py-2 hover:bg-white/20 transition duration-300'
-                    onClick={handleMenuItemClick}
-                  >
-                    Twitter Downloader
-                  </li>
-                  <li
-                    className='px-4 py-2 hover:bg-white/20 transition duration-300'
-                    onClick={handleMenuItemClick}
-                  >
-                    Youtube Downloader
-                  </li>
-                  <li
-                    className='px-4 py-2 hover:bg-white/20 transition duration-300'
-                    onClick={handleMenuItemClick}
-                  >
-                    Instagram Downloader
-                  </li>
-                  <li
-                    className='px-4 py-2 hover:bg-white/20 transition duration-300'
-                    onClick={handleMenuItemClick}
-                  >
-                    Thumbnail Downloader
-                  </li>
+                {menuItems.map((item, index) => (
+                  <Link href={item.path}      key={index}>
+        <li
+     
+          className='px-4 py-2 hover:bg-white/20 transition duration-300'
+          
+          >
+          {item.name}
+        </li>
+          </Link>
+      ))}
                 </ul>
               </div>
             )}
@@ -88,7 +83,7 @@ const Header = () => {
 
           <Link href={'/converter'}>
             <p className='text-sm rounded-md hover:text-white/80 py-1 px-2 transition duration-300  hover:bg-white/10 hover:backdrop-blur-lg'>
-              Video Converter
+              Image Converter
             </p>
           </Link>
         </div>
@@ -102,15 +97,19 @@ const Header = () => {
               className='bg-white/10 border-none backdrop-blur-lg '
             />
             <MenuList className='bg-white/10 backdrop-blur-lg border-none '>
-              <MenuItem className={MenuItemStyle}>Twitter Downloader</MenuItem>
-              <MenuItem className={MenuItemStyle}>Youtube Downloader</MenuItem>
-              <MenuItem className={MenuItemStyle}>
-                Instagram Downloader
+            {menuItems.map((item, index) => (
+              
+              <MenuItem key={index}>
+                <motion.div 
+                className='hover:bg-white/20 transition duration-300'
+                >
+                 <Link href={item.path}      key={index}>
+                 {item.name}
+                 </Link>
+              </motion.div>
               </MenuItem>
-              <MenuItem className={MenuItemStyle}>
-                Thumbnail Downloader
-              </MenuItem>
-              <MenuItem className={MenuItemStyle}>Video Converter</MenuItem>
+            ))}
+
             </MenuList>
           </Menu>
         </div>

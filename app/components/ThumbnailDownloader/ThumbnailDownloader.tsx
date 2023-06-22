@@ -92,12 +92,15 @@ const ThumbnailDownloader = () => {
   };
 
   return (
-    <div className='max-w-xl mx-auto mt-8 p-4  '>
-      <h2 className='text-2xl font-bold mb-4'>YouTube Thumbnail Downloader</h2>
-      <p className='text-white/80 mb-4'>
+    <div className='max-w-xl mx-auto mt-8 p-4 '>
+      <div className='mb-5'>
+
+      <h2 className='2xl:text-5xl xl:text-5xl text-2xl text-center font-bold text-white'>Thumb Downloader</h2>
+      <p className='text-xs text-white/80 text-center'>
         Enter the YouTube video URL to download its thumbnails.
       </p>
-      <form onSubmit={handleSubmit} className='flex items-center gap-2'>
+      </div>
+      <form onSubmit={handleSubmit} className='flex items-center gap-2 mb-10'>
         <SearchInput
           type='text'
           value={videoLink}
@@ -106,9 +109,7 @@ const ThumbnailDownloader = () => {
           isInvalid={error !== ''}
           isLoading={isLoading}
         />
-        {/* <ButtonComponent onClick={() => {}} isLoading={isLoading} type='submit'>
-          Download
-        </ButtonComponent> */}
+
       </form>
 
       {error !== '' && <p className='text-red-500 mt-2'>{error}</p>}

@@ -12,7 +12,7 @@ type LayoutProps = {
 
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
-    <div className=' h-full  '>
+    <div className='    '>
       <Header />
       <div className=''>{children}</div>
       <Footer />

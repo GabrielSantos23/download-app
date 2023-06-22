@@ -77,6 +77,8 @@ function ImageConverter() {
             </Box>
           )}
         </Dropzone>
+        {selectedImage && 
+        
         <div className='bg-[#2b2b2b] p-5 w-full rounded-md'>
           {selectedImage && (
             <Box w='full' mb={8}>
@@ -84,7 +86,7 @@ function ImageConverter() {
                 src={selectedImage}
                 alt='Uploaded Image'
                 className='w-full rounded-lg'
-              />
+                />
             </Box>
           )}
           {selectedImage && (
@@ -148,12 +150,13 @@ function ImageConverter() {
               <button
                 onClick={handleConvertImage}
                 className='w-full px-4 mt-5 py-2 text-white bg-sky-500 rounded-md hover:bg-sky-600 transition'
-              >
+                >
                 Convert
               </button>
             </Box>
           )}
         </div>
+    }
       </VStack>
     </Box>
   );
