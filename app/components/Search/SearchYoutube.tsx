@@ -22,7 +22,6 @@ import {
   Spinner,
 } from '@chakra-ui/react';
 import { ChevronDownIcon, DownloadIcon, TimeIcon } from '@chakra-ui/icons';
-import { useTheme } from '@chakra-ui/react';
 import Link from 'next/link';
 interface SearchYoutubeProps {
   setErrorMessage: React.Dispatch<React.SetStateAction<string>>;
@@ -52,14 +51,22 @@ const SearchYoutube: React.FC<SearchYoutubeProps> = ({
     [key: string]: boolean;
   }>({});
 
-  console.log(formated);
+  useEffect(() => {
+    if (searchResults.length === 0) {
+      setErrorMessage('No results found');
+    }
+  }, [searchResults, setErrorMessage]);
 
   const formatPublishedDate = (publishedAt: string) => {
     const date = new Date(publishedAt);
     return format(date, 'MM-dd-yyyy');
   };
 
-  const handleDownloadVideo = async (videoId: string, format: string) => {
+  const handleDownloadVideo = async (
+    videoId: string,
+    format: string,
+    title: string
+  ) => {
     setIsLoadingItems((prevLoadingItems) => ({
       ...prevLoadingItems,
       [videoId]: true,
@@ -95,7 +102,7 @@ const SearchYoutube: React.FC<SearchYoutubeProps> = ({
       const url = URL.createObjectURL(response2.data);
       const link = document.createElement('a');
       link.href = url;
-      link.download = `video.${format}`;
+      link.download = `${title}.${format}`;
       link.click();
 
       URL.revokeObjectURL(url);
@@ -157,7 +164,11 @@ const SearchYoutube: React.FC<SearchYoutubeProps> = ({
                           <MenuItem
                             className='hover:bg-white/10 transition duration-300'
                             onClick={() => {
-                              handleDownloadVideo(result.id.videoId, 'mp4');
+                              handleDownloadVideo(
+                                result.id.videoId,
+                                'mp4',
+                                result.snippet.title
+                              );
                             }}
                           >
                             Download MP4
@@ -165,7 +176,11 @@ const SearchYoutube: React.FC<SearchYoutubeProps> = ({
                           <MenuItem
                             className='hover:bg-white/10 transition duration-300'
                             onClick={() => {
-                              handleDownloadVideo(result.id.videoId, 'mp3');
+                              handleDownloadVideo(
+                                result.id.videoId,
+                                'mp3',
+                                result.snippet.title
+                              );
                             }}
                           >
                             Download MP3

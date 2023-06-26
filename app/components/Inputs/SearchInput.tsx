@@ -7,6 +7,7 @@ import {
 } from '@chakra-ui/react';
 import React from 'react';
 import { HiOutlineMagnifyingGlass } from 'react-icons/hi2';
+import TargetButton from '../TargetButton';
 
 interface SearchInputProps {
   value: string;
@@ -32,11 +33,11 @@ const SearchInput: React.FC<SearchInputProps> = ({
   title,
 }) => {
   return (
-    <div className='w-full'>
+    <div className='w-full flex gap-2'>
       <InputGroup size='md'>
         <Input
           title={title}
-          pr='2.7rem' // Adjusted padding-right value
+          pr='2.7rem'
           type='text'
           value={value}
           onChange={onChange}
@@ -64,6 +65,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
           </Button>
         </InputRightElement>
       </InputGroup>
+      {value && <TargetButton value={value} />}
     </div>
   );
 };

@@ -44,6 +44,8 @@ export default function DownloadForm() {
   const [isLoadingSearch, setIsLoadingSearch] = useState(false);
   const [isLoadingSearchText, setIsLoadingSearchText] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [title, setTitle] = useState('');
+
   const theme2 = useTheme();
   const isDarkTheme = theme === 'dark';
 
@@ -92,6 +94,7 @@ export default function DownloadForm() {
         videoId: video.id,
       });
       setIsLoadingSearch(false);
+      setTitle(video.snippet.title);
     } catch (error) {
       console.error('Error:', error);
       setVideoInfo(null);
@@ -130,7 +133,7 @@ export default function DownloadForm() {
 
       const link = document.createElement('a');
       link.href = url;
-      link.download = `video.${format}`;
+      link.download = `${title}.${format}`;
       link.click();
 
       URL.revokeObjectURL(url);
